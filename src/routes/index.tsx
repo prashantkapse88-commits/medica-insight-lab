@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav } from "@/components/site-nav";
-import logoAsset from "@/assets/medica-logo.png.asset.json";
+import logoUrl from "@/assets/medica-logo.jpeg";
 import heroBg from "@/assets/hero-bg.jpg";
 import microbiomeImg from "@/assets/microbiome.jpg";
 import platformImg from "@/assets/platform.jpg";
@@ -499,7 +499,7 @@ function Index() {
             </div>
 
             <div className="p-10 lg:p-12 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
-              <img src={logoAsset.url} alt="MEDICA" className="h-12 w-auto mb-8 brightness-0 invert" />
+              <img src={logoUrl} alt="MEDICA" className="h-14 w-auto mb-8 rounded-sm" />
 
               <div className="space-y-6 text-white">
                 <div>

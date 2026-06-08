@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logoAsset from "@/assets/medica-logo.png.asset.json";
+import logoUrl from "@/assets/medica-logo.jpeg";
 
 const NAV = [
   { label: "Home", href: "#home" },
@@ -35,11 +35,11 @@ export function SiteNav() {
         <div className="flex items-center justify-between h-20">
           <a href="#home" className="flex items-center gap-3 shrink-0">
             <img
-              src={logoAsset.url}
+              src={logoUrl}
               alt="MEDICA Tokyo Laboratories"
-              className="h-10 w-auto"
-              width={160}
-              height={40}
+              className="h-12 w-auto rounded-sm"
+              width={218}
+              height={72}
             />
           </a>
 
