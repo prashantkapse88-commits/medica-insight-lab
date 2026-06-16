@@ -649,6 +649,20 @@ function Index() {
                   <p className="text-white font-medium">Managed by Dr Taro Hirata</p>
                   <p className="text-white/80 mt-3">Dr. Taro Hirata</p>
                 </div>
+                <div className="pt-6 border-t border-white/10">
+                  <div className="text-xs uppercase tracking-[0.2em] text-[oklch(0.78_0.12_220)] mb-3">
+                    Social Media
+                  </div>
+                  <a
+                    href="https://www.linkedin.com/company/ninapharmltd/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-3 text-white font-medium hover:text-[oklch(0.85_0.1_220)] transition-colors"
+                  >
+                    LinkedIn
+                    <span aria-hidden>↗</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
