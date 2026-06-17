@@ -125,6 +125,40 @@ function NumberedCard({
   );
 }
 
+function IllustrationTile({
+  index,
+  children,
+  dark = false,
+}: {
+  index: number;
+  children: React.ReactNode;
+  dark?: boolean;
+}) {
+  const panelClass = dark
+    ? "border-white/10 bg-white/6 text-white hover:border-white/25 hover:bg-white/10"
+    : "border-border bg-card text-foreground hover:border-primary/40 hover:shadow-[var(--shadow-elegant)]";
+  const illustrationClass = dark
+    ? "bg-white/8 border-white/10"
+    : "bg-gradient-to-br from-accent/60 to-secondary border-border";
+  const textClass = dark ? "text-white/90" : "text-foreground/85";
+
+  return (
+    <div className={`group rounded-2xl border p-5 transition-all duration-300 hover:-translate-y-1 ${panelClass}`}>
+      <div className={`relative mb-5 h-24 overflow-hidden rounded-xl border ${illustrationClass}`}>
+        <div className="absolute left-5 top-6 h-8 w-8 rounded-full bg-primary/80 shadow-[0_0_30px_oklch(0.42_0.18_255/_0.35)]" />
+        <div className="absolute right-6 top-5 h-12 w-12 rounded-full border border-primary/35 bg-primary/10" />
+        <div className="absolute bottom-5 left-1/2 h-6 w-6 -translate-x-1/2 rounded-full bg-[oklch(0.72_0.18_220)]/70" />
+        <div className="absolute left-12 top-10 h-px w-[62%] rotate-6 bg-primary/40" />
+        <div className="absolute bottom-8 left-[46%] h-px w-[30%] -rotate-12 bg-[oklch(0.72_0.18_220)]/50" />
+        <span className="absolute bottom-3 right-4 font-mono text-xs text-primary/70">
+          / {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+      <p className={`text-sm font-medium leading-snug ${textClass}`}>{children}</p>
+    </div>
+  );
+}
+
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -152,9 +186,6 @@ function Index() {
                 HOME
               </span>
             </div>
-            <p className="text-sm uppercase tracking-[0.24em] text-white/70 mb-4">
-              Hero Section
-            </p>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[0.95] mb-8">
               MEDICA TOKYO LABORATORIES
             </h1>
@@ -298,11 +329,11 @@ function Index() {
               <h3 className="text-xl font-semibold mb-5 text-primary-deep">
                 What This Model Enables
               </h3>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <div className="grid sm:grid-cols-2 gap-5">
                 {modelEnables.map((item, i) => (
-                  <NumberedCard key={item} index={i}>
+                  <IllustrationTile key={item} index={i}>
                     {item}
-                  </NumberedCard>
+                  </IllustrationTile>
                 ))}
               </div>
             </div>
@@ -408,20 +439,19 @@ function Index() {
             </p>
           </div>
 
-          <h3 className="text-2xl font-semibold text-white mb-6">
-            Platform Capabilities
-          </h3>
+          <div className="mb-8 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <h3 className="text-2xl font-semibold text-white">
+              Platform Capabilities
+            </h3>
+            <p className="max-w-2xl text-sm text-white/65 leading-relaxed">
+              Each capability contributes a layer of evidence that helps convert patient response into clinical intelligence.
+            </p>
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
             {platformCapabilities.map((item, i) => (
-              <div
-                key={item}
-                className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all"
-              >
-                <div className="text-[oklch(0.78_0.16_220)] font-mono text-xs mb-3">
-                  / {String(i + 1).padStart(2, "0")}
-                </div>
-                <p className="text-white/90 font-medium">{item}</p>
-              </div>
+              <IllustrationTile key={item} index={i} dark>
+                {item}
+              </IllustrationTile>
             ))}
           </div>
 
@@ -441,20 +471,9 @@ function Index() {
             </div>
             <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {systemsBiology.map((item, i) => (
-                <div
-                  key={item}
-                  className="group flex min-h-[160px] flex-col justify-between rounded-2xl border border-white/10 bg-white/6 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/10"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono uppercase tracking-[0.24em] text-[oklch(0.78_0.16_220)]">
-                      / {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.72_0.18_220)] shadow-[0_0_20px_oklch(0.72_0.18_220/_0.65)]" />
-                  </div>
-                  <div className="pt-6 text-sm lg:text-[15px] text-white/88 leading-snug">
-                    {item}
-                  </div>
-                </div>
+                <IllustrationTile key={item} index={i} dark>
+                  {item}
+                </IllustrationTile>
               ))}
             </div>
             <div className="relative mt-10 rounded-2xl border border-white/10 bg-white/6 px-6 py-5">
@@ -648,6 +667,12 @@ function Index() {
                 <div className="pt-6 border-t border-white/10">
                   <p className="text-white font-medium">Managed by Dr Taro Hirata</p>
                   <p className="text-white/80 mt-3">Dr. Taro Hirata</p>
+                  <a
+                    href="mailto:t.hirata@medicaltokyolaboratories.jp"
+                    className="mt-3 inline-block text-white/80 hover:text-[oklch(0.85_0.1_220)] transition-colors"
+                  >
+                    t.hirata@medicaltokyolaboratories.jp
+                  </a>
                 </div>
                 <div className="pt-6 border-t border-white/10">
                   <div className="text-xs uppercase tracking-[0.2em] text-[oklch(0.78_0.12_220)] mb-3">
