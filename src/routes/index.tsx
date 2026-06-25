@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteNav } from "@/components/site-nav";
 import logoUrl from "@/assets/medica-logo.jpeg";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -125,32 +126,35 @@ function NumberedCard({
   );
 }
 
-function IllustrationTile({
+function ImageTile({
   index,
+  image,
+  alt,
   children,
   dark = false,
 }: {
   index: number;
+  image: string;
+  alt: string;
   children: React.ReactNode;
   dark?: boolean;
 }) {
   const panelClass = dark
     ? "border-white/10 bg-white/6 text-white hover:border-white/25 hover:bg-white/10"
     : "border-border bg-card text-foreground hover:border-primary/40 hover:shadow-[var(--shadow-elegant)]";
-  const illustrationClass = dark
-    ? "bg-white/8 border-white/10"
-    : "bg-gradient-to-br from-accent/60 to-secondary border-border";
   const textClass = dark ? "text-white/90" : "text-foreground/85";
 
   return (
     <div className={`group rounded-2xl border p-5 transition-all duration-300 hover:-translate-y-1 ${panelClass}`}>
-      <div className={`relative mb-5 h-24 overflow-hidden rounded-xl border ${illustrationClass}`}>
-        <div className="absolute left-5 top-6 h-8 w-8 rounded-full bg-primary/80 shadow-[0_0_30px_oklch(0.42_0.18_255/_0.35)]" />
-        <div className="absolute right-6 top-5 h-12 w-12 rounded-full border border-primary/35 bg-primary/10" />
-        <div className="absolute bottom-5 left-1/2 h-6 w-6 -translate-x-1/2 rounded-full bg-[oklch(0.72_0.18_220)]/70" />
-        <div className="absolute left-12 top-10 h-px w-[62%] rotate-6 bg-primary/40" />
-        <div className="absolute bottom-8 left-[46%] h-px w-[30%] -rotate-12 bg-[oklch(0.72_0.18_220)]/50" />
-        <span className="absolute bottom-3 right-4 font-mono text-xs text-primary/70">
+      <div className="relative mb-5 h-32 overflow-hidden rounded-xl border border-white/10 bg-secondary">
+        <img
+          src={image}
+          alt={alt}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+        <span className="absolute bottom-3 right-4 font-mono text-xs text-white/85">
           / {String(index + 1).padStart(2, "0")}
         </span>
       </div>
@@ -160,6 +164,11 @@ function IllustrationTile({
 }
 
 function Index() {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const modelImages = [labImg, microbiomeImg, platformImg, labImg, microbiomeImg];
+  const platformImages = [microbiomeImg, labImg, platformImg, platformImg, labImg, microbiomeImg];
+  const systemsImages = [microbiomeImg, platformImg, labImg, platformImg, microbiomeImg];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteNav />
@@ -233,6 +242,7 @@ function Index() {
                   At MEDICA, the clinic is not simply a validation site. It is a living intelligence platform for next-generation innovation.
                 </p>
               </div>
+
             </div>
           </div>
 
@@ -331,9 +341,14 @@ function Index() {
               </h3>
               <div className="grid sm:grid-cols-2 gap-5">
                 {modelEnables.map((item, i) => (
-                  <IllustrationTile key={item} index={i}>
+                  <ImageTile
+                    key={item}
+                    index={i}
+                    image={modelImages[i % modelImages.length]}
+                    alt={item}
+                  >
                     {item}
-                  </IllustrationTile>
+                  </ImageTile>
                 ))}
               </div>
             </div>
@@ -449,9 +464,15 @@ function Index() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
             {platformCapabilities.map((item, i) => (
-              <IllustrationTile key={item} index={i} dark>
+              <ImageTile
+                key={item}
+                index={i}
+                image={platformImages[i % platformImages.length]}
+                alt={item}
+                dark
+              >
                 {item}
-              </IllustrationTile>
+              </ImageTile>
             ))}
           </div>
 
@@ -471,9 +492,15 @@ function Index() {
             </div>
             <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {systemsBiology.map((item, i) => (
-                <IllustrationTile key={item} index={i} dark>
+                <ImageTile
+                  key={item}
+                  index={i}
+                  image={systemsImages[i % systemsImages.length]}
+                  alt={item}
+                  dark
+                >
                   {item}
-                </IllustrationTile>
+                </ImageTile>
               ))}
             </div>
             <div className="relative mt-10 rounded-2xl border border-white/10 bg-white/6 px-6 py-5">
@@ -689,6 +716,106 @@ function Index() {
                   </a>
                 </div>
               </div>
+
+              <form
+                className="mt-10 space-y-5 border-t border-white/10 pt-8"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  setFormSubmitted(true);
+                }}
+              >
+                <div>
+                  <h3 className="text-2xl font-semibold text-white mb-2">
+                    Contact Us
+                  </h3>
+                  <p className="text-sm text-white/65 leading-relaxed">
+                    Share your inquiry and the MEDICA team will review your message.
+                  </p>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <label className="block">
+                    <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/65">
+                      Name
+                    </span>
+                    <input
+                      name="name"
+                      required
+                      className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 outline-none transition-colors focus:border-[oklch(0.78_0.12_220)]"
+                      placeholder="Your name"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/65">
+                      Email
+                    </span>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 outline-none transition-colors focus:border-[oklch(0.78_0.12_220)]"
+                      placeholder="you@example.com"
+                    />
+                  </label>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <label className="block">
+                    <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/65">
+                      Organization
+                    </span>
+                    <input
+                      name="organization"
+                      className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 outline-none transition-colors focus:border-[oklch(0.78_0.12_220)]"
+                      placeholder="Company or institution"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/65">
+                      Inquiry Type
+                    </span>
+                    <select
+                      name="inquiryType"
+                      className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white outline-none transition-colors focus:border-[oklch(0.78_0.12_220)]"
+                      defaultValue=""
+                    >
+                      <option value="" disabled>
+                        Select one
+                      </option>
+                      <option value="Scientific collaboration">Scientific collaboration</option>
+                      <option value="Clinical research partnership">Clinical research partnership</option>
+                      <option value="Platform inquiry">Platform inquiry</option>
+                      <option value="General inquiry">General inquiry</option>
+                    </select>
+                  </label>
+                </div>
+
+                <label className="block">
+                  <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-white/65">
+                    Message
+                  </span>
+                  <textarea
+                    name="message"
+                    required
+                    rows={5}
+                    className="w-full resize-none rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 outline-none transition-colors focus:border-[oklch(0.78_0.12_220)]"
+                    placeholder="Tell us how MEDICA can help."
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  className="inline-flex w-full items-center justify-center rounded-xl bg-white px-6 py-4 font-semibold text-primary-deep transition-all hover:bg-[oklch(0.95_0.04_230)] sm:w-auto"
+                >
+                  Submit Inquiry
+                </button>
+
+                {formSubmitted && (
+                  <p className="rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white/85">
+                    Thank you. Your inquiry has been recorded on this page. Please email t.hirata@medicaltokyolaboratories.jp directly for urgent communication.
+                  </p>
+                )}
+              </form>
             </div>
           </div>
         </div>
